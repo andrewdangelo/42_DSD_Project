@@ -16,13 +16,13 @@ Since the project began, the team set out with a singular mission to develop an 
 
 To integrate the HID USB mouse using VHDL and properly use it on the Nexsys A7 100-T board, a few key files must be added and an adjustment be made to the board. 
 
-#### Adjusting the jumper
+### Adjusting the jumper
 As may be observed below, to use the USB mouse you need to move the blue MODE jumper ( as was performed in lab #2 ) to the __USB/SD__ pin.
 
 ![FPGA board image](/fpga_mode_image.jpg)
  
  
- #### Displaying the Mouse Cursor
+ ### Displaying the Mouse Cursor
  
  To display the mouse cursor in your VHDL project, you need to include the _MouseDisplay.vhdl_ file that is found in this repo. 
  
