@@ -14,8 +14,21 @@ Since the project began, the team set out with a singular mission to develop an 
 
 ## Breaking down the HID Mouse
 
-To integrate the HID USB mouse using VHDL and properly use it on the Nexsys A7 100-T board, a few key files must be added and an adjustment be made to the board. As may be observed below, to use the USB mouse you need to move the blue MODE jumper ( as was performed in lab #2 ) to the __USB/SD__ pin.
+To integrate the HID USB mouse using VHDL and properly use it on the Nexsys A7 100-T board, a few key files must be added and an adjustment be made to the board. 
+
+#### Adjusting the jumper
+As may be observed below, to use the USB mouse you need to move the blue MODE jumper ( as was performed in lab #2 ) to the __USB/SD__ pin.
 
 ![FPGA board image](/fpga_mode_image.jpg)
+ 
+ 
+ #### Displaying the Mouse Cursor
+ 
+ To display the mouse cursor in your VHDL project, you need to include the _MouseDisplay.vhdl_ file that is found in this repo. The _MouseDisplay.vhdl_ provides  the following ports:
+ * _xpos_: ( input pin ) the x position of the mouse realitive to the top, left-hand corner of the screen.
+ * _ypos_: ( input pin ) the y position of the mouse realitive to the top, left-hand corner of the screen.
+ * *pixel_clk*: ( input pin ) clock used to read pixels from internal memory and then outputs data on the vga color outputs. Different screen resolutions can be achieved by changing the speed of the clock: 25MHz --> 640x480, 40MHz --> 800x600, 108MHz --> 1280x1024.
+ 
+ 
  
  
