@@ -165,3 +165,9 @@ constant mouserom: displayrom := (
  * _middle_: ( output pin ) : tracks the middle click on the mouse. If the middle mouse button is clicked, _middle_ is set to high.
  * _new_event_: ( output pin ) : becomes active after receiving and processing a new movement data packet for one clock cycle.
  
+ 
+ ## Results
+ 
+ The team was successfully able to isolate the mouse integration modules and display a simple mouse cursor on a vga monitor as may be seen below.
+ 
+ ![final result](final-result.jpg)
