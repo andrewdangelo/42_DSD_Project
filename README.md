@@ -93,6 +93,31 @@ _Note: you can find this snippet at ~line 284 in MouseDisplay.vhdl_
 
 within the conditionals you may observed a 4 bit assignment for each port: red_out, green_out, blue_out. By default, __"1111"__, sets the signals to white so that the 2 bit combination of __"01"__, will be interpreted as white. Likewise, __"0"__, sets the signal to black so that the 2 bit combination of __"00"__, will be interpreted as black. To change these color assignments, simply change the 4 bit signal being assigned to each of the three vga ports.
 
+As for shape, the pattern by which each 2 bit element is arranged in the array will determine the shape of the cursor displayed. This is shown in the snippet below.
+
+__Note: the "11" in the array is interpreted as transparent__
+
+```
+constant mouserom: displayrom := (
+"00","00","11","11","11","11","11","11","11","11","11","11","11","11","11","11",
+"00","01","00","11","11","11","11","11","11","11","11","11","11","11","11","11",
+"00","01","01","00","11","11","11","11","11","11","11","11","11","11","11","11",
+"00","01","01","01","00","11","11","11","11","11","11","11","11","11","11","11",
+"00","01","01","01","01","00","11","11","11","11","11","11","11","11","11","11",
+"00","01","01","01","01","01","00","11","11","11","11","11","11","11","11","11",
+"00","01","01","01","01","01","01","00","11","11","11","11","11","11","11","11",
+"00","01","01","01","01","01","01","01","00","11","11","11","11","11","11","11",
+"00","01","01","01","01","01","00","00","00","00","11","11","11","11","11","11",
+"00","01","01","01","01","01","00","11","11","11","11","11","11","11","11","11",
+"00","01","00","00","01","01","00","11","11","11","11","11","11","11","11","11",
+"00","00","11","11","00","01","01","00","11","11","11","11","11","11","11","11",
+"00","11","11","11","00","01","01","00","11","11","11","11","11","11","11","11",
+"11","11","11","11","11","00","01","01","00","11","11","11","11","11","11","11",
+"11","11","11","11","11","00","01","01","00","11","11","11","11","11","11","11",
+"11","11","11","11","11","11","00","00","11","11","11","11","11","11","11","11"
+);
+```
+
  
  ### Adding Cursor Functionalities-- click, scroll, etc.
  
