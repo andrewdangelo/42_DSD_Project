@@ -171,3 +171,9 @@ constant mouserom: displayrom := (
  The team was successfully able to isolate the mouse integration modules and display a simple mouse cursor on a vga monitor as may be seen below.
  
  ![final result](final-result.jpg)
+ 
+ 
+ ## Resources
+ * https://github.com/Digilent/Nexys-A7-100T-OOB/tree/master/src/hdl
+ * https://reference.digilentinc.com/reference/programmable-logic/nexys-a7/reference-manual
+ * https://github.com/PeterHo8888/FPGA_Paint
