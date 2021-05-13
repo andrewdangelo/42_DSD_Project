@@ -136,7 +136,7 @@ within the conditionals you may observed a 4 bit assignment for each port: red_o
  * _ypos_: ( output pin ) : the y position of the cursor in relativity to the top left-hand corner of the screen.
  * _zpos_: ( output pin ) : the last change in movement on the z axis. The z axis represents scrolling on the screen. If scrolling is disabled then the _zpos_ isn't relevant.
  * _left_: ( output pin ) : tracks the left click on the mouse. If the left mouse button is clicked, _left_ is set to high.
- * _right_: ( output pin ) :
- * _middle_: ( output pin ) :
- * _new_event_: ( output pin ) :
+ * _right_: ( output pin ) : tracks the right click on the mouse. If the right mouse button is clicked, _right_ is set to high.
+ * _middle_: ( output pin ) : tracks the middle click on the mouse. If the middle mouse button is clicked, _middle_ is set to high.
+ * _new_event_: ( output pin ) : becomes active after receiving and processing a new movement data packet for one clock cycle.
  
