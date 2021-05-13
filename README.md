@@ -41,10 +41,37 @@ As may be observed below, to use the USB mouse you need to move the blue MODE ju
  ### Changing Cursor color, shape, and size
  
  The _MouseDisplay.vhdl_ file is set by default to display a 16 x 16 pixel black and white cursor. For a matter of demonstration purposes, the steps below will describe how to change the size of the cursor from 16 x 16 pixels to 32 x 32 pixels:
-      1. Locate `type displayrom` ( around line 135 ) and change `array(0 to 255)` to `array(0 to 1023)`.
-      2. Scroll down to `constant mouserom`, comment out the 16 bit default, and uncomment the 32 bit pixel array.
+1. Locate `type displayrom` ( around line 135 ) and change `array(0 to 255)` to `array(0 to 1023)`.
+2. Scroll down to `constant mouserom`, comment out the 16 bit default, and uncomment the 32 bit pixel array.
 
-You may have noticed that the `constant mouserom` is an array consiting of 2 bit pairs of the combinations, 00, 01, or 1x.
+You may take notice that the `constant mouserom` is an array of 2 bit combinations of 0 and 1. In the case of this file, each combination correlates to a color, take a look at the snippet below:
+
+```
+ if(enable_mouse_display = '1') then
+               -- white pixel of cursor
+               if(mousepixel = "01") then
+                  red_out <= "1111"; --(others => '1');
+                  green_out <= "1111"; --(others => '1');
+                  blue_out <= "1111"; --(others => '1');
+               -- black pixel of cursor
+               elsif(mousepixel = "00") then
+                  red_out <= (others => '0');
+                  green_out <= (others => '0');
+                  blue_out <= (others => '0');
+               -- transparent pixel of cursor
+               -- let input pass to output
+--               else
+--                  red_out <= red_in;
+--                  green_out <= green_in;
+--                  blue_out <= blue_in;
+               end if;
+```
+_Note: you can find this snippet at ~line 284 in MouseDisplay.vhdl_
+
+
+within the conditionals you may observed a 4 bit assignment for each port: red_out, green_out, blue_out. By default, __"1111"__, sets the signals to white so that the 2 bit combination of __"01"__, will be interpreted as white. Likewise, __"0"__, sets the signal to black so that the 2 bit combination of __"00"__, will be interpreted as black. To change these color assignments, simply change the 4 bit signal being assigned to each of the three vga ports.
+
+defined around _line 292_ within `process(pixel_clk)` .
  
  ### Adding Cursor Functionalities-- click, scroll, etc.
  
