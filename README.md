@@ -14,7 +14,7 @@ Since the project began, the team set out with a singular mission to develop an 
 
 ## Breaking down the HID Mouse
 
-To integrate the HID USB mouse using VHDL and properly use it on the Nexsys A7 100-T board, a few key files must be added and an adjustment be made to the board. As may be observed below, to use the USB mouse you need to move the blue MODE jumper (as was performed in lab #2) to the __USB/SD__ pin.
+To integrate the HID USB mouse using VHDL and properly use it on the Nexsys A7 100-T board, a few key files must be added and an adjustment be made to the board. As may be observed below, to use the USB mouse you need to move the blue MODE jumper ( as was performed in lab #2 ) to the __USB/SD__ pin.
 
 
  
