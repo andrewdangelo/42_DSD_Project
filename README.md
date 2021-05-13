@@ -24,7 +24,7 @@ As may be observed below, to use the USB mouse you need to move the blue MODE ju
  
  ### Displaying the Mouse Cursor
  
- To display the mouse cursor in your VHDL project, you need to include the _MouseDisplay.vhdl_ file that is found in this repo. 
+ To display the mouse cursor in your VHDL project, you need to include the _MouseDisplay.vhdl_ file that is found in this repo. This file takes in the following signals into the ports described below, and outputs vga color signals to display the mouse on a vga screen. 
  
  __The _MouseDisplay.vhdl_ provides the following ports:__
  * _xpos_: ( input pin ) the x position of the mouse realitive to the top, left-hand corner of the screen.
@@ -36,6 +36,9 @@ As may be observed below, to use the USB mouse you need to move the blue MODE ju
  * *green_out*: ( output pin ) 4 bit color output to the green vga pins.
  * *blue_out*: ( output pin ) 4 bit color output to the blue vga pins.
  
+ The _MouseDisplay.vhdl_ file __ONLY__ displays the mouse cursor on a vga screen. If you want to implement mouse functionality you will need to use a separate additional file that is also present in this repo: _MouseCtl.vhdl_ .
+ 
+ ### Adding Cursor Functionalities-- click, scroll, etc.
  
  
  
