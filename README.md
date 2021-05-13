@@ -28,6 +28,11 @@ As may be observed below, to use the USB mouse you need to move the blue MODE ju
  * _xpos_: ( input pin ) the x position of the mouse realitive to the top, left-hand corner of the screen.
  * _ypos_: ( input pin ) the y position of the mouse realitive to the top, left-hand corner of the screen.
  * *pixel_clk*: ( input pin ) clock used to read pixels from internal memory and then outputs data on the vga color outputs. Different screen resolutions can be achieved by changing the speed of the clock: 25MHz --> 640x480, 40MHz --> 800x600, 108MHz --> 1280x1024.
+ * _hcount_:
+ * _vcount_:
+ * *red_out*:
+ * *green_out*:
+ * *blue_out*:
  
  
  
