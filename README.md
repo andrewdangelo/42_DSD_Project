@@ -81,7 +81,9 @@ within the conditionals you may observed a 4 bit assignment for each port: red_o
  __PS2Interface.vhdl__: 
  The module responsible for the delegation of data sent and recieved from the mouse to the other files in the program. Mainly, what's important to understand about this module is that its acts as a middle man between the _MouseCtl_ module and the mouse itself. _PS2Interface_ will receive data from the mouse, validate it, and send it to the _MouseCtl_ module over the `rx_data` channel. Then, it will receive data from the _MouseCtl_ module via the `tx_data` channel and will validate the data per the _write_ output signal.
  
+ __MouseCtl.vhdl__
+ The _MouseCtl.vhdl_ module is respon
  
- The _MouseCtl.vhdl_ file is dependent upon the _PS2_interface.vhdl_ file which validates and delegates data recieved from the USB mouse device.
+ dependent on the _PS2_interface.vhdl_ module to exchange data between the mouse and the program.
  
  
