@@ -36,10 +36,20 @@ As may be observed below, to use the USB mouse you need to move the blue MODE ju
  * *green_out*: ( output pin ) 4 bit color output to the green vga pins.
  * *blue_out*: ( output pin ) 4 bit color output to the blue vga pins.
  
- The _MouseDisplay.vhdl_ file __ONLY__ displays the mouse cursor on a vga screen. If you want to implement mouse functionality you will need to use a separate additional file that is also present in this repo: _MouseCtl.vhdl_ .
+ The _MouseDisplay.vhdl_ file __ONLY__ displays the mouse cursor on a vga screen. If you want to implement mouse functionality you will need to use a separate additional files.
+ 
+ ### Changing Cursor color, shape, and size
+ 
+ The _MouseDisplay.vhdl_ file is set by default to display a 16 x 16 pixel black and white cursor. For a matter of demonstration purposes, the steps below will describe how to change the size of the cursor from 16 x 16 pixels to 32 x 32 pixels:
+      1. Locate `type displayrom` ( around line 135 ) and change `array(0 to 255)` to `array(0 to 1023)`.
+      2. Scroll down to `constant mouserom`, comment out the 16 bit default, and uncomment the 32 bit pixel array.
+
+You may have noticed that the `constant mouserom` is an array consiting of 2 bit pairs of the combinations, 00, 01, or 1x.
  
  ### Adding Cursor Functionalities-- click, scroll, etc.
  
+ To add cursor functionalities such as clicking and scrolling two files must added in addition to the _MouseDisplay.vhdl_ file: _MouseCtl.vhdl_ and _PS2_interface.vhdl_. 
  
+ The _MouseCtl.vhdl_ file is dependent upon the _PS2_interface.vhdl_ file which validates and delegates data recieved from the USB mouse device.
  
  
