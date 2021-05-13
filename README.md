@@ -24,17 +24,39 @@ As may be observed below, to use the USB mouse you need to move the blue MODE ju
  
  ### Displaying the Mouse Cursor
  
- To display the mouse cursor in your VHDL project, you need to include the _MouseDisplay.vhdl_ file that is found in this repo. This file takes in the following signals into the ports described below, and outputs vga color signals to display the mouse on a vga screen. 
+ To display the mouse cursor in your VHDL project, you need to include the _MouseDisplay.vhdl_ module found in this repo. This file is dependent upon the _MouseCtl.vhdl_ module to provide the x and y position of the cursor and outputs vga red, green, and blue signals to display on the screen. A port map of the file can be observed below:
  
- __The _MouseDisplay.vhdl_ provides the following ports:__
- * _xpos_: ( input pin ) the x position of the mouse realitive to the top, left-hand corner of the screen.
- * _ypos_: ( input pin ) the y position of the mouse realitive to the top, left-hand corner of the screen.
- * *pixel_clk*: ( input pin ) clock used to read pixels from internal memory and then outputs data on the vga color outputs. Different screen resolutions can be achieved by changing the speed of the clock: 25MHz --> 640x480, 40MHz --> 800x600, 108MHz --> 1280x1024.
- * _hcount_: ( input pin ) recounts the horizontal position of the current pixel from left to right on the screen.
- * _vcount_: ( input pin ) recounts the vertical position of the current pixel from left to right on the screen.
- * *red_out*: ( output pin ) 4 bit color output to the red vga pins.
- * *green_out*: ( output pin ) 4 bit color output to the green vga pins.
- * *blue_out*: ( output pin ) 4 bit color output to the blue vga pins.
+ ```
+ port (
+   pixel_clk: in std_logic;
+   xpos     : in std_logic_vector(11 downto 0);
+   ypos     : in std_logic_vector(11 downto 0);
+
+   hcount   : in std_logic_vector(11 downto 0);
+   vcount   : in std_logic_vector(11 downto 0);
+   --blank    : in std_logic; -- if VGA blank is used
+
+   --red_in   : in std_logic_vector(3 downto 0); -- if VGA signal pass-through is used
+   --green_in : in std_logic_vector(3 downto 0);
+   --blue_in  : in std_logic_vector(3 downto 0);
+   
+   enable_mouse_display_out : out std_logic;
+
+   red_out  : out std_logic_vector(3 downto 0);
+   green_out: out std_logic_vector(3 downto 0);
+   blue_out : out std_logic_vector(3 downto 0)
+);
+ ```
+ 
+ ___MouseDisplay.vhdl_ Port Definitions:__
+ * _xpos_: ( input pin ) : the x position of the mouse realitive to the top, left-hand corner of the screen.
+ * _ypos_: ( input pin ) : the y position of the mouse realitive to the top, left-hand corner of the screen.
+ * *pixel_clk*: ( input pin ) : clock used to read pixels from internal memory and then outputs data on the vga color outputs. Different screen resolutions can be achieved by changing the speed of the clock: 25MHz --> 640x480, 40MHz --> 800x600, 108MHz --> 1280x1024.
+ * _hcount_: ( input pin ) : recounts the horizontal position of the current pixel from left to right on the screen.
+ * _vcount_: ( input pin ) : recounts the vertical position of the current pixel from left to right on the screen.
+ * *red_out*: ( output pin ) : 4 bit color output to the red vga pins.
+ * *green_out*: ( output pin ) : 4 bit color output to the green vga pins.
+ * *blue_out*: ( output pin ) : 4 bit color output to the blue vga pins.
  
  The _MouseDisplay.vhdl_ file __ONLY__ displays the mouse cursor on a vga screen. If you want to implement mouse functionality you will need to use a separate additional files.
  
@@ -74,16 +96,47 @@ within the conditionals you may observed a 4 bit assignment for each port: red_o
  
  ### Adding Cursor Functionalities-- click, scroll, etc.
  
- To add cursor functionality, such as clicking and scrolling, two files must added in addition to _MouseDisplay.vhdl_: _MouseCtl.vhdl_ and _PS2_interface.vhdl_. 
- 
- 
+ Cursor functionality, such as clicking and scrolling, is controlled in the _MouseCtl.vhdl_ module. The _MouseCtl.vhdl_ module is a dependent of the _PS2Interface.vhdl_ module so to add cursor functionalities to your project you __MUST__ include both modules.
  
  __PS2Interface.vhdl__: 
  The module responsible for the delegation of data sent and recieved from the mouse to the other files in the program. Mainly, what's important to understand about this module is that its acts as a middle man between the _MouseCtl_ module and the mouse itself. _PS2Interface_ will receive data from the mouse, validate it, and send it to the _MouseCtl_ module over the `rx_data` channel. Then, it will receive data from the _MouseCtl_ module via the `tx_data` channel and will validate the data per the _write_ output signal.
  
  __MouseCtl.vhdl__
- The _MouseCtl.vhdl_ module is respon
+ The _MouseCtl.vhdl_ module is responsible for calculating the x, y, and z position of the cursor; processing left, right, and middle button clicks; and setting / resetting the global clock signal.
  
- dependent on the _PS2_interface.vhdl_ module to exchange data between the mouse and the program.
+ A port map for the _MouseCtl.vhdl_ module can be viewed below:
  
+ ```
+ port(
+   clk         : in std_logic;
+   rst         : in std_logic;
+   xpos        : out std_logic_vector(11 downto 0);
+   ypos        : out std_logic_vector(11 downto 0);
+   zpos        : out std_logic_vector(3 downto 0);
+   left        : out std_logic;
+   middle      : out std_logic;
+   right       : out std_logic;
+   new_event   : out std_logic;
+   value       : in std_logic_vector(11 downto 0);
+   setx        : in std_logic;
+   sety        : in std_logic;
+   setmax_x    : in std_logic;
+   setmax_y    : in std_logic;
+   
+   ps2_clk     : inout std_logic;
+   ps2_data    : inout std_logic
+   
+);
+ ```
+ 
+ ___MouseCtl.vhdl_ Port Definitions:__
+ * _clk_: ( input pin ) : the global clock signal of the mouse files. By default it is set to __100MHz__.
+ * _rst_: ( input pin ) : the global reset signal. When fired it will reset the global clock.
+ * _xpos_: ( output pin ) : the x position of the cursor in relativity to the top left-hand corner of the screen.
+ * _ypos_: ( output pin ) : the y position of the cursor in relativity to the top left-hand corner of the screen.
+ * _zpos_: ( output pin ) : the last change in movement on the z axis. The z axis represents scrolling on the screen. If scrolling is disabled then the _zpos_ isn't relevant.
+ * _left_: ( output pin ) : tracks the left click on the mouse. If the left mouse button is clicked, _left_ is set to high.
+ * _right_: ( output pin ) :
+ * _middle_: ( output pin ) :
+ * _new_event_: ( output pin ) :
  
